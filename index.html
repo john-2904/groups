@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Poster</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .card {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Movie Collector</h1>
+        <form action="" novalidate>
+            <label for="movieTitle">Movie Title:</label>
+            <input type="text" id="movieTitle" name="movieTitle" placeholder="Avengers" required>
+            <label for="movieImage">Enter Image:</label>
+            <input type="file" id="movieImage" name="movieImage" accept="image/*" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="row mt-4" id="movieContainer"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        const movieForm = document.querySelector("form");
+        const movieContainer = document.getElementById("movieContainer");
+
+        movieForm.addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent form submission
+
+            const title = document.getElementById("movieTitle").value;
+            const movieImage = document.getElementById("movieImage").files[0];
+
+            // Create Bootstrap card
+            const card = document.createElement("div");
+            card.classList.add("col-md-4", "mb-4");
+
+            const cardInner = document.createElement("div");
+            cardInner.classList.add("card");
+
+            // Display movie image within the card
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(movieImage);
+            img.alt = title;
+            img.classList.add("card-img-top");
+
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+
+            // Display movie title within the card
+            const cardTitle = document.createElement("h5");
+            cardTitle.classList.add("card-title");
+            cardTitle.textContent = title;
+
+            // Append elements to the card
+            cardBody.appendChild(cardTitle);
+            cardInner.appendChild(img);
+            cardInner.appendChild(cardBody);
+            card.appendChild(cardInner);
+
+            // Append the card to the movie container
+            movieContainer.appendChild(card);
+            // Reset the form
+            movieForm.reset();
+        });
+    </script>
+</body>
+</html>
